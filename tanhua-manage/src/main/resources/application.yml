@@ -1,0 +1,110 @@
+server:
+  port: 18083
+
+#配置redis
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tanhua_manage?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+  redis:
+    host: 192.168.44.6
+    port: 6379
+
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 10MB
+      max-file-size: 10MB
+      file-size-threshold: 20MB
+
+dubbo:
+  application:
+    name: tanhua-manage
+  registry:
+    address: zookeeper://192.168.44.6:2181
+  consumer:
+    check: false
+
+# ===================================================================
+# 分布式文件系统FDFS配置
+# ===================================================================
+fdfs:
+  so-timeout: 1500
+  connect-timeout: 600
+  #缩略图生成参数
+  thumb-image:
+    width: 150
+    height: 150
+  #TrackerList参数,支持多个
+  tracker-list: 192.168.44.6:22122
+  web-server-url: https://192.168.44.6:8888/
+
+# ===================================================================
+# rocketMQ 配置
+# ===================================================================
+rocketmq:
+  name-server: 192.168.44.6:9876
+
+#配置短信平台信息
+tanhua:
+  # jwt的密钥
+  secret: 76bd425b6f29f7fcc2e0bfc286043df1
+  # 发送短信配置
+  sms:
+    signName: 黑马程序员
+    parameterName: code
+    validateCodeTemplateCode: SMS_164508533
+    accessKeyId: LTAI5tAcs2HCvKCyHBrYU5d1
+    accessKeySecret: eufAkeZZgjDLNIKkbMCslqyygK2smd
+  oss:
+    endpoint: oss-cn-shenzhen.aliyuncs.com
+    accessKeyId: LTAI5tG8UUdM947d8XsSxTKf
+    accessKeySecret: WIp6yMRRCsCyAWyhr6D7tkf4nNoqCE
+    bucketName: makefriends1
+    url: https://makefriends1.oss-cn-shenzhen.aliyuncs.com/
+
+  face:
+    appId: 24108273
+    apiKey: d20ivTQbF4QcRzY1D0fUmGIu
+    secretKey: uoMQ0ynm4LWZNMIruQ9r1AIIzyzIzPf0
+
+  # im
+  huanxin:
+    url: http://a31.easemob.com/
+    orgName: 1101210514085712
+    appName: tanhua
+    clientId: YXA6KsuCnlN6Tj2sA87-NGD2WA
+    clientSecret: YXA6ZIHUsB5Io8kKmEb9cgSyGSnuCa8
+
+
+  huawei:
+    username: 【用户名】
+    password: 【密码】
+    project: 【project name】
+    domain: 【domain name】
+    # 图片检测内容 politics：是否涉及政治人物的检测，terrorism：是否包含涉政暴恐元素的检测，porn：是否包含涉黄内容元素的检测，ad：是否包含广告的检测（公测特性），all：包含politics、terrorism和porn三种场景的检测
+    categoriesImage: politics,terrorism,porn
+    # 文字检测内容 politics：涉政，porn：涉黄，ad：广告，abuse：辱骂，contraband：违禁品，flood：灌水
+    categoriesText: politics,porn,ad,abuse,contraband,flood
+    textApiUrl: https://moderation.cn-east-3.myhuaweicloud.com/v1.0/moderation/text
+    imageApiUrl: https://moderation.cn-east-3.myhuaweicloud.com/v1.0/moderation/image/batch
+# log
+logging:
+  level:
+    root: info
+    com:
+      tanhua: debug
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %msg - %logger{15}%n\'
+
+#mybaits-plus
+mybatis-plus:
+  global-config:
+    db-config:
+      table-prefix: tb_    #数据库表前缀
+      id-type: auto        #数据库表主键的策略
+
+
+
